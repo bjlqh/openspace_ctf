@@ -72,7 +72,7 @@ contract VaultExploiter is Test {
 
         vm.startPrank(address(attacker));
         // 给恶意合约提供资金
-        vm.deal(address(attacker), 1 ether);
+        vm.deal(address(attacker), 0.1 ether);
         
         // 开启提款
         vault.openWithdraw();
@@ -82,6 +82,9 @@ contract VaultExploiter is Test {
         
         // 启动重入攻击
         attacker.attack();
+
+        //打印attacker的余额
+        console.log("attacker balance:", address(attacker).balance);
 
         require(vault.isSolve(), "solved");
         vm.stopPrank();
