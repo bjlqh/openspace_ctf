@@ -1,30 +1,27 @@
-## Try to Hack Vault 
+保险柜Logic：
+{
+    owner           slot[0]
+    password        slot[1]
+}
+功能：
+1.改变owner:需要输入密码
 
-Read the smart contract `Vault.sol`, try to steal all eth from the vault.
+保险柜:
+{
+    owner           slot[0]
+    logic           slot[1]
+    deposites       slot[2]
+    canWithdraw     slot[3]
+}
 
-You can write a hacker contract and add some code to pass the `forge test` .
+功能:
+1.存款。不需要条件
+2.管理员可以将保险柜状态设置为打开。
+3.取款。需要保险柜状态是打开的，同时保险柜里有钱。可以取走用户自己的钱。
+4.fallback。可以delegatecall到logic合约。
 
-### Tips 
-you need understand following knowledge points:
-1. reentrance 
-2. ABI encoding
-3. delegatecall
- 
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-forge script script/Vault.s.sol --rpc-url http://127.0.0.1:8545 --broadcast
-```
-
-## test
-
-```
-forge test -vvv
-```
+思路：
+1.先部署logic,再部署vault合约。
+2.部署attacker合约。
+3.attacker设置chanageOwner为自己
+4.
